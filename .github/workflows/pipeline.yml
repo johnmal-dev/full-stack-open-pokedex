@@ -21,3 +21,16 @@ jobs:
         run: npm run build
       - name: npm run test
         run: npm run test
+      - name: e2e tests
+        uses: cypress-io/github-action@v4
+        with:
+          build: npm run build
+          start: npm run start-prod
+          wait-on: http://localhost:2121
+      - name: pushing code to heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "pokedex-johnmal" #Must be unique in Heroku
+          heroku_email: 'j.malapit@hotmail.com'
+
